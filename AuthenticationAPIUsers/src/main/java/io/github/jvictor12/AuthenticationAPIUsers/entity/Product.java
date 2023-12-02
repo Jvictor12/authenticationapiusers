@@ -17,11 +17,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "tb_products")
-public class Product {
+public class Product extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotEmpty
     private String nome;
