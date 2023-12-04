@@ -39,10 +39,12 @@ public class ApplicationConfig implements CommandLineRunner {
 
     private void saveDefaultUser(User user) {
 
-        user.setLogin("admin");
-        user.setPassword("admin");
-        user.setUserRole(UserRole.valueOf("ADMIN"));
+            user.setId(1L);
+            user.setLogin("admin");
+            user.setPassword("admin");
+            user.setRole(UserRole.valueOf("ADMIN"));
 
-        service.save(user);
+            service.save(user);
+
     }
 }

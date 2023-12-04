@@ -6,11 +6,15 @@ import io.github.jvictor12.AuthenticationAPIUsers.exception.ObjectNotFoundExcept
 import io.github.jvictor12.AuthenticationAPIUsers.exception.ValidationException;
 import io.github.jvictor12.AuthenticationAPIUsers.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class AuthorizationService implements UserDetailsService {
@@ -45,6 +49,18 @@ public class AuthorizationService implements UserDetailsService {
         return userRepository.save(encoderPassword(user));
     }
 
+    public User update (User user) {
+
+        if (user == null) {
+            throw new ValidationException("Usuario invalido");
+        }
+        if(!userRepository.existsById(user.getId())){
+            throw new ObjectNotFoundException("Usuario nao encontrado");
+        }
+
+        return userRepository.save(user);
+    }
+
     private User encoderPassword (User user) {
         if(user.getId() != null) {
             final var user_findById = userRepository.findById(user.getId());
@@ -57,5 +73,11 @@ public class AuthorizationService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public List<User> findAll() {
+        List<User> usersDTO = userRepository.findAll();
+
+        return usersDTO;
     }
 }

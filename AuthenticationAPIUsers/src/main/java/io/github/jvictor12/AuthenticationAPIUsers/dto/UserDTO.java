@@ -7,13 +7,12 @@ import java.io.Serializable;
 
 public record UserDTO(
         String login,
-        UserRole userRole
+        UserRole role
 ) implements Serializable {
-
     public UserDTO (User user) {
         this (
                 user.getLogin(),
-                user.getUserRole()
+                user.getRole()
         );
     }
 }
